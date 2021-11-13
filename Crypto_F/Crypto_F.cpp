@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void recursive(const int level, stack<bool>& values, vector<array<bool, array_size>>& result)
+void generate_all(const int level, stack<bool>& values, vector<array<bool, array_size>>& result)
 {
 	if (level != array_size)
 	{
@@ -15,7 +15,7 @@ void recursive(const int level, stack<bool>& values, vector<array<bool, array_si
 		{
 			values.emplace(i);
 			
-			recursive(level + 1, values, result);
+			generate_all(level + 1, values, result);
 
 			values.pop();
 		}
@@ -39,13 +39,6 @@ void recursive(const int level, stack<bool>& values, vector<array<bool, array_si
 
 		result.push_back(to_push);
 	}
-}
-
-void generate_all(vector<array<bool, array_size>>& result)
-{
-	stack<bool> values;
-
-	recursive(0, values, result);
 }
 
 bool multiply(const array<bool, array_size>& a, const array<bool, array_size>& x)
@@ -168,7 +161,9 @@ int main()
 {
 	vector<array<bool, array_size>> all_inputs;
 
-	generate_all(all_inputs);
+	stack<bool> stack;
+
+	generate_all(0, stack, all_inputs);
 
 	array<bool, all_size> f = { 0, 0, 0, 1, 0, 1, 1, 1 };
 
